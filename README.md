@@ -27,3 +27,12 @@ Results are saved in browser `localStorage`. Use **Settings → Export results**
 ## Safety
 
 This app is not medical care. Post-operative hand exercises and strength loading should follow the instructions of your surgeon or certified hand therapist. Stop and seek medical guidance for sharp or increasing pain, swelling, numbness, color change, or loss of control.
+
+
+## Version 2 upgrades
+- One-tap rest timer with pause, add-time, vibration, and completion alert
+- Smart progressive-overload suggestions using the prior week's logged sets
+- Consistency, volume, hand-mobility, and pain trend charts
+- Install prompt and improved offline service worker
+- Configurable rest periods and weight units
+- Supabase-ready settings panel (live cloud sync still requires project credentials and schema)

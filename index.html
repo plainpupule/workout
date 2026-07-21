@@ -17,7 +17,7 @@
         <h1>Full Body · Chest + Glutes</h1>
       </div>
     </div>
-    <button id="travelToggle" class="pill" aria-pressed="false">✈ Travel Mode</button>
+    <div class="top-actions"><button id="installApp" class="pill install-pill" hidden>＋ Install</button><button id="travelToggle" class="pill" aria-pressed="false">✈ Travel Mode</button></div>
   </header>
 
   <main>
@@ -63,6 +63,10 @@
     </article>
   </template>
 
+  <aside id="timerDock" class="timer-dock" hidden aria-live="polite">
+    <div><span class="timer-label">REST TIMER</span><strong id="timerReadout">01:30</strong></div>
+    <div class="timer-actions"><button id="timerPause" class="mini-button">Pause</button><button id="timerAdd" class="mini-button">+30s</button><button id="timerClose" class="mini-button">Close</button></div>
+  </aside>
   <script src="app.js"></script>
 </body>
 </html>
