@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <title>8-Week Full Body</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">8</div>
+      <div>
+        <p class="eyebrow">8-WEEK PROGRAM</p>
+        <h1>Full Body · Chest + Glutes</h1>
+      </div>
+    </div>
+    <button id="travelToggle" class="pill" aria-pressed="false">✈ Travel Mode</button>
+  </header>
+
+  <main>
+    <section class="status-card">
+      <div><span>Week</span><strong id="weekLabel">1 of 8</strong></div>
+      <div><span>Core sessions</span><strong id="weeklyProgress">0 / 3</strong></div>
+      <div><span>Hand mobility</span><strong id="handTrend">—</strong></div>
+    </section>
+
+    <nav class="tabs" aria-label="App sections">
+      <button class="tab active" data-tab="today">Today</button>
+      <button class="tab" data-tab="program">Program</button>
+      <button class="tab" data-tab="mobility">Mobility</button>
+      <button class="tab" data-tab="progress">Progress</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <section id="today" class="panel active"></section>
+    <section id="program" class="panel"></section>
+    <section id="mobility" class="panel"></section>
+    <section id="progress" class="panel"></section>
+    <section id="settings" class="panel"></section>
+  </main>
+
+  <template id="exerciseTemplate">
+    <article class="exercise-card">
+      <div class="exercise-head">
+        <div><p class="exercise-tag"></p><h3></h3><p class="exercise-note"></p></div>
+        <label class="check-wrap"><input type="checkbox" class="exercise-complete" /><span>Done</span></label>
+      </div>
+      <div class="sets"></div>
+      <details><summary>Technique & hand-friendly notes</summary><p class="cue"></p></details>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
