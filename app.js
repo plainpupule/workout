@@ -3,7 +3,7 @@ const state=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||{week:1,trave
 state.settings??={restSeconds:90,units:'lb'}; state.profile??={startDate:new Date().toISOString().slice(0,10)};
 const save=()=>{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));renderStatus();};
 
-let timerInterval=null,timerRemaining=state.settings.restSeconds,timerPaused=false,deferredInstallPrompt=null;
+let timerInterval=null,timerRemaining=state.settings.restSeconds,timerPaused=false,deferredInstallPrompt=null,currentDayId='d1';
 function formatTime(sec){const m=Math.floor(sec/60),s=sec%60;return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
 function updateTimerDock(){const dock=document.getElementById('timerDock');if(!dock)return;dock.hidden=false;document.getElementById('timerReadout').textContent=formatTime(Math.max(0,timerRemaining));document.getElementById('timerPause').textContent=timerPaused?'Resume':'Pause'}
 function startRestTimer(seconds=state.settings.restSeconds){clearInterval(timerInterval);timerRemaining=Number(seconds)||90;timerPaused=false;updateTimerDock();timerInterval=setInterval(()=>{if(timerPaused)return;timerRemaining--;updateTimerDock();if(timerRemaining<=0){clearInterval(timerInterval);navigator.vibrate?.([180,80,180]);document.title='Rest complete · 8-Week Full Body';setTimeout(()=>document.title='8-Week Full Body',3000)}},1000)}
@@ -123,11 +123,11 @@ const handMobility=[
 
 function sessionKey(dayId){return `w${state.week}-${dayId}`}
 function renderStatus(){
- document.getElementById('weekLabel').textContent=`${state.week} of 8`;
+ const weekLabel=document.getElementById('weekLabel'); if(weekLabel) weekLabel.textContent=`${state.week} of 8`;
  const done=['d1','d2','d3'].filter(id=>state.logs[sessionKey(id)]?.completed).length;
- document.getElementById('weeklyProgress').textContent=`${done} / 3`;
+ const weeklyProgress=document.getElementById('weeklyProgress'); if(weeklyProgress) weeklyProgress.textContent=`${done} / 3`;
  const vals=Object.values(state.logs).map(x=>Number(x.mobility)).filter(Boolean);
- document.getElementById('handTrend').textContent=vals.length?`${vals.at(-1)}/10`:'—';
+ const handTrend=document.getElementById('handTrend'); if(handTrend) handTrend.textContent=vals.length?`${vals.at(-1)}/10`:'—';
  document.getElementById('travelToggle').classList.toggle('active',state.travel);
  document.getElementById('travelToggle').setAttribute('aria-pressed',String(state.travel));
 }
@@ -153,50 +153,44 @@ function equipmentType(name){
  if(n.includes('push-up')||n.includes('dead bug')||n.includes('bird dog')||n.includes('frog pump')||n.includes('glute bridge')) return ['mat','Exercise mat'];
  return ['dumbbell','Gym equipment'];
 }
-function equipmentSvg(name){
- const [type,label]=equipmentType(name);
- const common=`<svg viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a3e635"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".28"/></filter></defs><rect width="420" height="190" rx="24" fill="#0b1020"/><path d="M24 154H396" stroke="#334155" stroke-width="3" stroke-linecap="round"/>`;
- const art={
- press:`<g filter="url(#s)" stroke="url(#g)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M100 150V54h44v96M100 82h44M144 70l68 22M212 92v58M196 108h58M254 108v42M212 122l-34 22M254 122l35 20"/><circle cx="177" cy="144" r="8" fill="#a3e635" stroke="none"/></g>`,
- legpress:`<g filter="url(#s)" stroke="url(#g)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M92 150h88l42-75h78M145 150l38-65h46M222 75l48-32M270 43l46 30M292 55l-44 70M248 125h58"/><circle cx="205" cy="119" r="10" fill="#a3e635" stroke="none"/></g>`,
- smith:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M94 150V38M300 150V38M94 38h206M116 72h162M132 72v78M262 72v78M158 118h78M180 118v32M214 118v32"/><circle cx="116" cy="72" r="8" fill="#8b5cf6" stroke="none"/><circle cx="278" cy="72" r="8" fill="#8b5cf6" stroke="none"/></g>`,
- pulldown:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M110 150V38h172v112M196 38v42M150 78h92M196 80v18M152 116h88M172 116v34M220 116v34"/><path d="M154 78l-20 15M238 78l20 15"/></g>`,
- cable:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M106 150V38h208v112M132 58h54v72h-54zM234 58h54v72h-54zM186 55h48M210 55v65M210 120l-27 22M210 120l27 22"/><circle cx="210" cy="120" r="7" fill="#a3e635" stroke="none"/></g>`,
- abduction:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M128 150V90h96l36 24v36M144 106h64M224 90V54M224 54h52M160 116l-28 24M202 116l28 24"/><circle cx="181" cy="115" r="9" fill="#a3e635" stroke="none"/></g>`,
- curl:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M120 150V92h92l42 22v36M138 108h58M212 92V52h54M198 116l26 22M224 138h60"/><circle cx="197" cy="116" r="8" fill="#a3e635" stroke="none"/></g>`,
- row:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M98 150h224M142 150l34-70h68l34 70M176 80l-36 28M244 80l36 28M156 108h108M210 108v42"/></g>`,
- barbell:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M90 74h240M120 62v24M142 56v36M278 56v36M300 62v24M132 146h156M160 146v-38h100v38"/></g>`,
- dumbbell:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M120 95h180M138 73v44M160 64v62M260 64v62M282 73v44M128 146h164M158 146v-28h104v28"/></g>`,
- band:`<g filter="url(#s)" stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round"><path d="M112 60c76 0 45 82 98 82s21-82 98-82"/><circle cx="112" cy="60" r="13"/><circle cx="308" cy="60" r="13"/></g>`,
- landmine:`<g filter="url(#s)" stroke="url(#g)" stroke-width="9" fill="none" stroke-linecap="round"><path d="M104 150l42-12L306 54M94 150h70M286 46l32 16M166 126l28 32M214 99l28 32"/><circle cx="306" cy="54" r="10" fill="#a3e635" stroke="none"/></g>`,
- cardio:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="150" cy="126" r="34"/><circle cx="270" cy="126" r="34"/><path d="M150 126l46-58 30 58h-76l46-58h38M234 68h36M196 68l-18-24"/></g>`,
- extension:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M94 150h232M142 150l42-75h72l42 75M184 75l-38 20M256 75l38 20M196 102h48"/></g>`,
- mat:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linejoin="round"><path d="M92 136l52-82h184l-52 82zM144 54l46 82"/><circle cx="253" cy="89" r="18"/><path d="M235 112l-38 20M269 111l28 20"/></g>`
- };
- return `<div class="equipment-art">${common}${art[type]||art.dumbbell}</svg><div class="equipment-caption"><span>Equipment preview</span><strong>${label}</strong></div></div>`;
+function equipmentImage(name){
+ const n=name.toLowerCase();
+ if(n.includes('cable')||n.includes('pulldown')||n.includes('pallof')||n.includes('landmine')) return 'assets/cable-station.jpg';
+ if(n.includes('dumbbell')||n.includes('barbell')||n.includes('romanian')||n.includes('bridge')||n.includes('frog')||n.includes('split')||n.includes('goblet')||n.includes('lunge')) return 'assets/incline-bench.jpg';
+ return 'assets/chest-press.jpg';
 }
 
 function showWorkout(day){
- const panel=document.getElementById('today'); const key=sessionKey(day.id); const log=state.logs[key]||{exercises:{},pain:0,mobility:9,energy:7,notes:'',completed:false};
- panel.innerHTML=`<div class="hero"><span class="badge">${day.tag}</span><h2>${day.name}</h2><p class="muted">Week ${state.week}: ${weekScheme[state.week].label} · ${day.time} · ${weekScheme[state.week].rir}</p></div><div class="warning"><strong>Post-surgery guardrail:</strong> only use hand exercises and loading your surgeon or hand therapist has cleared. Stop for sharp pain, increasing swelling, numbness, or loss of control.</div><div id="exerciseList"></div><div class="card"><h3>Session check-in</h3><div class="metrics"><label>Right-hand pain (0–10)<input id="pain" type="number" min="0" max="10" value="${log.pain}"></label><label>Right-hand mobility (0–10)<input id="mobilityScore" type="number" min="0" max="10" value="${log.mobility}"></label><label>Energy (0–10)<input id="energy" type="number" min="0" max="10" value="${log.energy}"></label><label>Notes<textarea id="notes">${log.notes||''}</textarea></label></div><div class="actions"><button class="button" id="finishWorkout">Save & complete workout</button><button class="button secondary" id="backProgram">Back to program</button></div></div>`;
+ currentDayId=day.id;
+ const panel=document.getElementById('today'); const key=sessionKey(day.id); const log=state.logs[key]||{exercises:{},pain:0,mobility:9,energy:7,notes:'',completed:false,started:false};
+ const focus=day.id==='d1'?'Chest + glutes strength':day.id==='d2'?'Balanced upper + lower body':day.id==='d3'?'Glutes + chest hypertrophy':'Pump, conditioning + mobility';
+ panel.innerHTML=`<div class="warning"><strong>Post-surgery guardrail:</strong> only use hand exercises and loading your surgeon or hand therapist has cleared. Stop for sharp pain, increasing swelling, numbness, or loss of control.</div>
+ <section class="workout-hero"><div class="hero-top"><div><span class="hero-kicker">TODAY'S WORKOUT</span><h2>${day.name}</h2><p class="focus">${focus}</p><p class="muted">Week ${state.week}: ${weekScheme[state.week].label} · ${day.time}</p></div><button class="start-button ${log.started?'started':''}" id="startWorkout">${log.started?'✓ WORKOUT STARTED':'▶ START WORKOUT'}</button></div><div class="focus-box"><strong>Focus:</strong> Control every rep, keep the right wrist stacked, and squeeze the chest or glutes at the finish.</div></section>
+ <div id="exerciseList"></div><div class="card"><h3>Session check-in</h3><div class="metrics"><label>Right-hand pain (0–10)<input id="pain" type="number" min="0" max="10" value="${log.pain}"></label><label>Right-hand mobility (0–10)<input id="mobilityScore" type="number" min="0" max="10" value="${log.mobility}"></label><label>Energy (0–10)<input id="energy" type="number" min="0" max="10" value="${log.energy}"></label><label>Notes<textarea id="notes">${log.notes||''}</textarea></label></div><div class="actions"><button class="button" id="finishWorkout">Save & complete workout</button><button class="button secondary" id="backProgram">Back to program</button></div></div>`;
  const list=panel.querySelector('#exerciseList');
  day.ex.forEach((ex,i)=>{
   const node=document.getElementById('exerciseTemplate').content.cloneNode(true); const exlog=log.exercises[i]||{};
-  const displayName=getExerciseName(ex); const guide=getGuide(displayName);
-  const visual=node.querySelector('.exercise-visual'); visual.innerHTML=equipmentSvg(displayName); visual.setAttribute('aria-label',`${displayName} equipment illustration`);
-  node.querySelector('h3').textContent=displayName; node.querySelector('.exercise-tag').textContent=ex[1]; node.querySelector('.exercise-note').textContent=ex[2]; node.querySelector('.cue').textContent=ex[3];
-  const smart=document.createElement('div');smart.className='smart-coach';smart.innerHTML=`<span>SMART NEXT STEP</span><p>${progressionSuggestion(day,i)}</p><button class="rest-button" type="button">⏱ Start ${Math.round(state.settings.restSeconds/30)*30}s rest</button>`;smart.querySelector('button').onclick=()=>startRestTimer(state.settings.restSeconds);node.querySelector('.exercise-guide').after(smart);
+  const displayName=getExerciseName(ex); const guide=getGuide(displayName); const count=day.id==='bonus'?2:weekScheme[state.week].sets;
+  node.querySelector('.exercise-number').textContent=i+1;
+  node.querySelector('h3').textContent=displayName;
+  node.querySelector('.exercise-meta').textContent=`${count} SETS  •  ${day.id==='bonus'?'12–15':weekScheme[state.week].reps} REPS`;
+  const photo=node.querySelector('.exercise-photo'); photo.src=equipmentImage(displayName); photo.alt=`Equipment used for ${displayName}`;
+  node.querySelector('.exercise-note').textContent=ex[2]; node.querySelector('.cue').textContent=ex[3];
   node.querySelector('.steps').innerHTML=guide.steps.map(step=>`<li>${step}</li>`).join('');
+  node.querySelector('.target-line').innerHTML=`<strong>TARGETS:</strong> ${ex[1]}`;
   node.querySelector('.mistake').innerHTML=`<strong>Watch for:</strong> ${guide.mistake}`;
   const demo=node.querySelector('.demo-link'); demo.href=guide.url; demo.setAttribute('aria-label',`Watch a ${displayName} exercise demo`);
   const complete=node.querySelector('.exercise-complete'); complete.checked=!!exlog.complete; complete.onchange=e=>updateExercise(key,i,'complete',e.target.checked);
-  const sets=node.querySelector('.sets'); const count=day.id==='bonus'?2:weekScheme[state.week].sets;
-  for(let s=0;s<count;s++){const r=(exlog.sets||[])[s]||{}; const row=document.createElement('div'); row.className='set-row'; row.innerHTML=`<span>Set ${s+1}</span><input inputmode="decimal" placeholder="Weight" value="${r.weight||''}" aria-label="Weight set ${s+1}"><input inputmode="numeric" placeholder="Reps (${day.id==='bonus'?'12–15':weekScheme[state.week].reps})" value="${r.reps||''}" aria-label="Reps set ${s+1}">`; const inputs=row.querySelectorAll('input'); inputs[0].oninput=e=>updateSet(key,i,s,'weight',e.target.value);inputs[1].oninput=e=>updateSet(key,i,s,'reps',e.target.value);sets.appendChild(row)}
+  const smart=node.querySelector('.smart-coach-slot'); smart.innerHTML=`<div class="smart-coach"><span>SMART NEXT STEP</span><p>${progressionSuggestion(day,i)}</p><button class="rest-button" type="button">⏱ Start ${state.settings.restSeconds}s rest</button></div>`; smart.querySelector('button').onclick=()=>startRestTimer(state.settings.restSeconds);
+  const sets=node.querySelector('.sets');
+  for(let s=0;s<count;s++){const r=(exlog.sets||[])[s]||{}; const row=document.createElement('div'); row.className='set-row'; row.innerHTML=`<span>Set ${s+1}</span><input inputmode="decimal" placeholder="Weight" value="${r.weight||''}" aria-label="Weight set ${s+1}"><input inputmode="numeric" placeholder="Reps" value="${r.reps||''}" aria-label="Reps set ${s+1}">`; const inputs=row.querySelectorAll('input'); inputs[0].oninput=e=>updateSet(key,i,s,'weight',e.target.value);inputs[1].oninput=e=>updateSet(key,i,s,'reps',e.target.value);sets.appendChild(row)}
   list.appendChild(node);
  });
+ document.getElementById('startWorkout').onclick=()=>{const l=state.logs[key]||{exercises:{}};l.started=true;l.startedAt??=new Date().toISOString();state.logs[key]=l;save();showWorkout(day);setTimeout(()=>document.querySelector('.exercise-card')?.scrollIntoView({behavior:'smooth',block:'start'}),50)};
  document.getElementById('finishWorkout').onclick=()=>{const l=state.logs[key]||{exercises:{}};Object.assign(l,{pain:+pain.value,mobility:+mobilityScore.value,energy:+energy.value,notes:notes.value,completed:true,date:new Date().toISOString()});state.logs[key]=l;save();alert('Workout saved. Nice work.');showWorkout(day)};
  document.getElementById('backProgram').onclick=()=>switchTab('program');
 }
+
 function updateExercise(key,i,field,val){state.logs[key]??={exercises:{}};state.logs[key].exercises[i]??={sets:[]};state.logs[key].exercises[i][field]=val;save()}
 function updateSet(key,i,s,field,val){state.logs[key]??={exercises:{}};state.logs[key].exercises[i]??={sets:[]};state.logs[key].exercises[i].sets[s]??={};state.logs[key].exercises[i].sets[s][field]=val;save()}
 
@@ -243,6 +237,6 @@ function switchTab(id){document.querySelectorAll('.panel').forEach(x=>x.classLis
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>switchTab(t.dataset.tab));
 document.getElementById('timerPause').onclick=()=>{timerPaused=!timerPaused;updateTimerDock()};document.getElementById('timerAdd').onclick=()=>{timerRemaining+=30;updateTimerDock()};document.getElementById('timerClose').onclick=closeTimer;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;document.getElementById('installApp').hidden=false});document.getElementById('installApp').onclick=async()=>{if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;document.getElementById('installApp').hidden=true}};
-document.getElementById('travelToggle').onclick=()=>{state.travel=!state.travel;save();renderProgram();const active=document.querySelector('#today .hero h2');if(active){const d=days.find(x=>x.name===active.textContent);if(d)showWorkout(d)}};
+document.getElementById('travelToggle').onclick=()=>{state.travel=!state.travel;save();renderProgram();showWorkout(days.find(x=>x.id===currentDayId)||days[0])};
 renderStatus();renderProgram();renderMobility();renderProgress();renderSettings();showWorkout(days[0]);
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#071019" />
   <title>8-Week Full Body</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="styles.css" />
@@ -11,28 +11,19 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="brand-mark" aria-hidden="true">8</div>
-      <div>
-        <p class="eyebrow">8-WEEK PROGRAM</p>
-        <h1>Full Body · Chest + Glutes</h1>
-      </div>
+      <div class="brand-mark">8</div>
+      <div><p class="eyebrow">8-WEEK PROGRAM</p><h1>Full Body · Chest + Glutes</h1></div>
     </div>
-    <div class="top-actions"><button id="installApp" class="pill install-pill" hidden>＋ Install</button><button id="travelToggle" class="pill" aria-pressed="false">✈ Travel Mode</button></div>
+    <button id="travelToggle" class="travel-button" aria-pressed="false">✈ <span>Travel Mode</span></button>
   </header>
 
   <main>
-    <section class="status-card">
-      <div><span>Week</span><strong id="weekLabel">1 of 8</strong></div>
-      <div><span>Core sessions</span><strong id="weeklyProgress">0 / 3</strong></div>
-      <div><span>Hand mobility</span><strong id="handTrend">—</strong></div>
-    </section>
-
     <nav class="tabs" aria-label="App sections">
-      <button class="tab active" data-tab="today">Today</button>
-      <button class="tab" data-tab="program">Program</button>
-      <button class="tab" data-tab="mobility">Mobility</button>
-      <button class="tab" data-tab="progress">Progress</button>
-      <button class="tab" data-tab="settings">Settings</button>
+      <button class="tab active" data-tab="today"><span>⌂</span>Today</button>
+      <button class="tab" data-tab="program"><span>▣</span>Program</button>
+      <button class="tab" data-tab="mobility"><span>♧</span>Mobility</button>
+      <button class="tab" data-tab="progress"><span>▥</span>Progress</button>
+      <button class="tab" data-tab="settings"><span>⚙</span>More</button>
     </nav>
 
     <section id="today" class="panel active"></section>
@@ -44,29 +35,33 @@
 
   <template id="exerciseTemplate">
     <article class="exercise-card">
-      <div class="exercise-head">
-        <div><p class="exercise-tag"></p><h3></h3><p class="exercise-note"></p></div>
-        <label class="check-wrap"><input type="checkbox" class="exercise-complete" /><span>Done</span></label>
+      <div class="exercise-title-row">
+        <div class="exercise-number"></div>
+        <div class="exercise-title-copy"><h3></h3><p class="exercise-meta"></p></div>
+        <label class="done-check"><input type="checkbox" class="exercise-complete"><span>✓</span></label>
       </div>
-      <div class="exercise-visual" role="img" aria-label="Exercise equipment illustration"></div>
-      <div class="exercise-guide">
-        <div class="guide-icon" aria-hidden="true">▶</div>
-        <div>
+      <div class="exercise-main">
+        <img class="exercise-photo" alt="" loading="lazy" />
+        <div class="exercise-instructions">
           <p class="guide-label">HOW TO DO IT</p>
-          <ol class="steps"></ol>
-          <p class="mistake"></p>
-          <a class="demo-link" target="_blank" rel="noopener noreferrer">Watch a demo ↗</a>
+          <ul class="steps"></ul>
+          <p class="target-line"></p>
+          <a class="demo-link" target="_blank" rel="noopener noreferrer">Watch demo ↗</a>
         </div>
       </div>
+      <p class="exercise-note"></p>
+      <div class="smart-coach-slot"></div>
       <div class="sets"></div>
-      <details><summary>Technique & hand-friendly notes</summary><p class="cue"></p></details>
+      <details><summary>Technique & hand-friendly notes</summary><p class="cue"></p><p class="mistake"></p></details>
     </article>
   </template>
 
   <aside id="timerDock" class="timer-dock" hidden aria-live="polite">
-    <div><span class="timer-label">REST TIMER</span><strong id="timerReadout">01:30</strong></div>
-    <div class="timer-actions"><button id="timerPause" class="mini-button">Pause</button><button id="timerAdd" class="mini-button">+30s</button><button id="timerClose" class="mini-button">Close</button></div>
+    <div><span>REST TIMER</span><strong id="timerReadout">01:30</strong></div>
+    <div><button id="timerPause">Pause</button><button id="timerAdd">+30s</button><button id="timerClose">Close</button></div>
   </aside>
+
+  <button id="installApp" hidden>Install</button>
   <script src="app.js"></script>
 </body>
 </html>
