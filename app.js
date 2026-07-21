@@ -42,6 +42,55 @@ const days=[
   ['Zone 2 Cardio','Conditioning','20–30 minutes conversational pace.','Bike or incline walk.','Brisk Walk'] ]}
 ];
 
+
+const exerciseGuides={
+ 'Machine Chest Press':[['Set the seat so the handles line up with mid-chest.','Plant your feet, brace your torso, and keep wrists stacked.','Press smoothly, stop just short of locking out, then return under control.'],'Avoid shrugging or letting the wrists bend backward.'],
+ 'Barbell Hip Thrust':[['Place your upper back on the bench and the bar across the hip crease.','Tuck the chin, brace the ribs, and drive through the heels.','Finish with glutes squeezed and shins nearly vertical; lower slowly.'],'Do not overarch the lower back at the top.'],
+ 'Incline Dumbbell Press':[['Set the bench to a low incline and begin with dumbbells over the upper chest.','Keep shoulder blades gently pulled back and wrists neutral.','Lower until elbows are slightly below the torso, then press up and inward.'],'Do not flare the elbows straight out or lose wrist control.'],
+ 'Romanian Deadlift':[['Stand tall with weights close to the thighs and knees softly bent.','Push the hips back while keeping the spine long.','Stop when the hamstrings are loaded, then drive the hips forward.'],'Do not squat the weight or let it drift away from your legs.'],
+ 'Cable Glute Kickback':[['Attach an ankle strap and hold the machine for balance.','Brace the core and keep the working knee slightly bent.','Drive the heel back without twisting, pause, then return slowly.'],'Do not swing through the lower back.'],
+ 'Pallof Press':[['Stand sideways to the cable with the handle at chest height.','Brace the core and press the hands straight forward.','Resist rotation, pause, and bring the handle back in.'],'Do not let the hips or shoulders turn toward the cable.'],
+ 'Leg Press':[['Place feet about shoulder-width on the platform.','Lower with control while keeping the pelvis and back supported.','Push through the whole foot and stop short of locking the knees.'],'Do not force a depth that causes the hips to tuck or pinch.'],
+ 'Neutral-Grip Lat Pulldown':[['Sit tall with thighs secured and take a neutral grip.','Draw the shoulders down, then pull the elbows toward the ribs.','Pause near the upper chest and return with control.'],'Do not lean far back or pull with the hands alone.'],
+ 'Chest-Supported Row':[['Set the bench so your chest stays supported throughout.','Begin with arms long and shoulder blades relaxed.','Pull elbows back, squeeze the upper back, then lower slowly.'],'Do not crane the neck or shrug toward the ears.'],
+ 'Landmine Press':[['Hold the end of the bar near the shoulder in a split or half-kneeling stance.','Brace the core and keep the wrist in line with the forearm.','Press up and forward, then return slowly to the shoulder.'],'Do not twist the torso or bend the wrist around the handle.'],
+ 'Seated Hamstring Curl':[['Adjust the pad just above the heels and secure the thighs.','Curl the heels down and back while keeping the hips planted.','Squeeze briefly, then control the return.'],'Do not bounce or lift the hips from the seat.'],
+ 'Cable Lateral Raise':[['Stand side-on to the cable with the handle in the far hand.','Keep a soft elbow and raise the arm in a slight forward angle.','Stop around shoulder height and lower slowly.'],'Do not shrug or swing the body.'],
+ 'Hack Squat or Smith Squat':[['Choose a stance that lets the knees track comfortably over the toes.','Brace the torso and descend under control.','Drive through the mid-foot and stand without snapping the knees.'],'Do not force depth if the hips pinch or the pelvis tucks.'],
+ 'Dumbbell Glute Bridge':[['Lie on your back with feet planted and weight across the hips.','Brace the ribs and gently tuck the pelvis.','Drive through the heels, squeeze the glutes, and lower slowly.'],'Do not push the movement into the lower back.'],
+ 'Incline Machine Press':[['Adjust the seat so handles align with the upper chest.','Set the shoulder blades and keep wrists centered.','Press smoothly, pause near extension, and return under control.'],'Do not let the shoulders roll forward at the bottom.'],
+ 'Cable Chest Fly':[['Set handles slightly below shoulder height and step into a staggered stance.','Keep a soft elbow and open the chest without overstretching.','Bring the hands together in a wide arc, squeeze, then return slowly.'],'Do not turn it into a press or let the shoulders dump forward.'],
+ 'Bulgarian Split Squat':[['Place the rear foot on a bench and the front foot far enough forward for balance.','Lean slightly forward and lower the back knee toward the floor.','Drive through the front foot to stand.'],'Do not push off the rear leg or let the front knee collapse inward.'],
+ 'Hip Abduction Machine':[['Sit tall or lean slightly forward with the pads outside the knees.','Brace the torso and press the knees outward.','Pause at the open position and return slowly.'],'Do not bounce the stack or let the knees snap inward.'],
+ 'Cable or Machine Chest Press':[['Set the handles at mid-chest height and take a stable stance or seat.','Brace the torso and keep the wrists neutral.','Press forward smoothly and return until the chest is comfortably stretched.'],'Do not shrug or overextend the shoulders.'],
+ 'Frog Pump':[['Lie on your back with soles of the feet together and knees open.','Tuck the pelvis and brace the ribs.','Drive the hips up, squeeze the glutes, and use a controlled rhythm.'],'Do not arch the lower back to create more height.'],
+ 'Back Extension':[['Set the pad just below the hip crease and anchor the feet.','Hinge forward with a long spine.','Drive the hips into the pad and rise only to a neutral body line.'],'Do not hyperextend or throw the torso upward.'],
+ 'Zone 2 Cardio':[['Choose a bike, incline walk, or elliptical.','Move at a pace where you can speak in short sentences.','Keep the effort steady for 20–30 minutes.'],'Do not turn the session into repeated hard intervals.'],
+ 'Dumbbell Floor Press':[['Lie on the floor with knees bent and dumbbells over the chest.','Keep wrists stacked and upper arms about 30–45 degrees from the torso.','Lower until the upper arms touch the floor, then press up smoothly.'],'Do not bounce the elbows off the floor.'],
+ 'Dumbbell Hip Thrust':[['Set the upper back on a bench and place a dumbbell across the hips.','Brace the ribs and drive through the heels.','Squeeze the glutes at the top and lower with control.'],'Do not overarch the lower back.'],
+ 'Incline Push-up':[['Place hands on a bench or bar slightly wider than shoulders.','Keep the body in a straight line and wrists as comfortable as possible.','Lower the chest toward the support, then press away.'],'Raise the incline or use handles if the right hand is uncomfortable.'],
+ 'Dumbbell RDL':[['Hold dumbbells close to the thighs with knees softly bent.','Push the hips back while keeping the spine long.','Stand by driving the hips forward and squeezing the glutes.'],'Do not round the back or turn it into a squat.'],
+ 'Banded Kickback':[['Anchor a band low and loop it around the ankle.','Brace the torso and keep the standing leg soft.','Drive the heel back, pause, and return slowly.'],'Do not rotate the pelvis.'],
+ 'Dead Bug':[['Lie on your back with hips and knees at 90 degrees.','Press the lower back gently into the floor.','Extend opposite arm and leg without losing trunk position, then switch.'],'Do not let the ribs flare or low back arch.'],
+ 'Goblet Squat':[['Hold one dumbbell at chest height and set the feet comfortably.','Brace and sit down between the hips.','Drive through the whole foot to stand.'],'Do not let the knees collapse inward or force hip depth.'],
+ 'Band Pulldown':[['Anchor the band overhead and sit or kneel tall.','Set the shoulders down and pull elbows toward the ribs.','Pause, then slowly allow the arms to lengthen.'],'Do not lean back excessively.'],
+ 'One-Arm Dumbbell Row':[['Support one hand and knee on a bench.','Keep the torso square and the working wrist neutral.','Pull the elbow toward the hip and lower slowly.'],'Do not twist the torso to move the weight.'],
+ 'Half-Kneeling Dumbbell Press':[['Kneel with the opposite foot forward and hold the dumbbell at shoulder height.','Brace the glute and core.','Press overhead without leaning back, then lower slowly.'],'Do not flare the ribs or bend the wrist backward.'],
+ 'Slider Hamstring Curl':[['Lie on your back with heels on sliders or towels.','Lift the hips and brace the torso.','Slide the heels away and curl them back while keeping hips lifted.'],'Do not let the hips sag.'],
+ 'Dumbbell Lateral Raise':[['Stand tall with light dumbbells at the sides.','Raise the arms slightly forward of the body with soft elbows.','Stop near shoulder height and lower slowly.'],'Do not swing or shrug.'],
+ 'Glute Bridge':[['Lie on your back with feet flat and knees bent.','Tuck the pelvis slightly and brace the ribs.','Drive through the heels, squeeze the glutes, and lower slowly.'],'Do not arch the lower back.'],
+ 'Resistance-Band Fly':[['Anchor the band behind you around chest height.','Step forward, brace, and keep elbows softly bent.','Bring the hands together in a wide arc and return slowly.'],'Do not let the shoulders roll forward.'],
+ 'Reverse Lunge':[['Stand tall and step one foot backward.','Lower both knees while keeping most pressure through the front foot.','Drive through the front leg to return to standing.'],'Do not push hard off the rear foot.'],
+ 'Banded Lateral Walk':[['Place a mini band above the knees or at the ankles.','Soften the knees and keep the pelvis level.','Take controlled side steps without letting the feet snap together.'],'Do not sway the torso or turn the toes outward.'],
+ 'Push-up':[['Set hands under or slightly wider than shoulders.','Brace the body in one straight line.','Lower the chest under control and press the floor away.'],'Use handles or an incline if wrist extension bothers the right hand.'],
+ 'Bird Dog':[['Start on hands and knees with the spine neutral.','Brace the core and extend opposite arm and leg.','Pause without rotating, return, and switch sides.'],'Do not arch the lower back or shift the hips.'],
+ 'Brisk Walk':[['Stand tall and begin at an easy pace.','Build to a purposeful speed while keeping breathing controlled.','Maintain a steady rhythm for the planned time.'],'Do not turn it into a painful or breathless effort.']
+};
+function getGuide(name){
+ const g=exerciseGuides[name]||[['Set up in a stable position.','Move through a comfortable range with controlled form.','Stop the set before technique or hand control breaks down.'],'Avoid rushing, bouncing, or forcing painful range.'];
+ return {steps:g[0],mistake:g[1],url:`https://www.youtube.com/results?search_query=${encodeURIComponent(name+' exercise proper form')}`};
+}
+
 const hipMobility=[
  ['90/90 Hip Switches','2 × 6/side','Move slowly; use hands behind you for support.'],
  ['Half-Kneeling Hip Flexor Stretch','2 × 30 sec/side','Tuck pelvis slightly; squeeze the back glute.'],
@@ -70,13 +119,61 @@ function renderStatus(){
 }
 
 function getExerciseName(ex){return state.travel?ex[4]:ex[0]}
+
+function equipmentType(name){
+ const n=name.toLowerCase();
+ if(n.includes('leg press')) return ['legpress','Leg press machine'];
+ if(n.includes('hack squat')||n.includes('smith')) return ['smith','Smith / hack squat station'];
+ if(n.includes('chest press')||n.includes('machine press')||n.includes('incline machine')) return ['press','Chest press machine'];
+ if(n.includes('lat pulldown')||n.includes('pulldown')) return ['pulldown','Lat pulldown station'];
+ if(n.includes('cable')||n.includes('pallof')) return ['cable','Cable tower'];
+ if(n.includes('hip abduction')) return ['abduction','Hip abduction machine'];
+ if(n.includes('hamstring curl')) return ['curl','Seated hamstring curl machine'];
+ if(n.includes('landmine')) return ['landmine','Landmine press setup'];
+ if(n.includes('row')&&n.includes('supported')) return ['row','Chest-supported row bench'];
+ if(n.includes('barbell')||n.includes('smith')) return ['barbell','Barbell and bench'];
+ if(n.includes('dumbbell')||n.includes('goblet')||n.includes('bulgarian')||n.includes('reverse lunge')) return ['dumbbell','Dumbbells and bench'];
+ if(n.includes('band')) return ['band','Resistance band'];
+ if(n.includes('bike')||n.includes('cardio')||n.includes('walk')) return ['cardio','Cardio equipment'];
+ if(n.includes('back extension')) return ['extension','Back extension bench'];
+ if(n.includes('push-up')||n.includes('dead bug')||n.includes('bird dog')||n.includes('frog pump')||n.includes('glute bridge')) return ['mat','Exercise mat'];
+ return ['dumbbell','Gym equipment'];
+}
+function equipmentSvg(name){
+ const [type,label]=equipmentType(name);
+ const common=`viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a3e635"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".28"/></filter></defs><rect width="420" height="190" rx="24" fill="#0b1020"/><path d="M24 154H396" stroke="#334155" stroke-width="3" stroke-linecap="round"/>`;
+ const art={
+ press:`<g filter="url(#s)" stroke="url(#g)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M100 150V54h44v96M100 82h44M144 70l68 22M212 92v58M196 108h58M254 108v42M212 122l-34 22M254 122l35 20"/><circle cx="177" cy="144" r="8" fill="#a3e635" stroke="none"/></g>`,
+ legpress:`<g filter="url(#s)" stroke="url(#g)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M92 150h88l42-75h78M145 150l38-65h46M222 75l48-32M270 43l46 30M292 55l-44 70M248 125h58"/><circle cx="205" cy="119" r="10" fill="#a3e635" stroke="none"/></g>`,
+ smith:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M94 150V38M300 150V38M94 38h206M116 72h162M132 72v78M262 72v78M158 118h78M180 118v32M214 118v32"/><circle cx="116" cy="72" r="8" fill="#8b5cf6" stroke="none"/><circle cx="278" cy="72" r="8" fill="#8b5cf6" stroke="none"/></g>`,
+ pulldown:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M110 150V38h172v112M196 38v42M150 78h92M196 80v18M152 116h88M172 116v34M220 116v34"/><path d="M154 78l-20 15M238 78l20 15"/></g>`,
+ cable:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M106 150V38h208v112M132 58h54v72h-54zM234 58h54v72h-54zM186 55h48M210 55v65M210 120l-27 22M210 120l27 22"/><circle cx="210" cy="120" r="7" fill="#a3e635" stroke="none"/></g>`,
+ abduction:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M128 150V90h96l36 24v36M144 106h64M224 90V54M224 54h52M160 116l-28 24M202 116l28 24"/><circle cx="181" cy="115" r="9" fill="#a3e635" stroke="none"/></g>`,
+ curl:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M120 150V92h92l42 22v36M138 108h58M212 92V52h54M198 116l26 22M224 138h60"/><circle cx="197" cy="116" r="8" fill="#a3e635" stroke="none"/></g>`,
+ row:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M98 150h224M142 150l34-70h68l34 70M176 80l-36 28M244 80l36 28M156 108h108M210 108v42"/></g>`,
+ barbell:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M90 74h240M120 62v24M142 56v36M278 56v36M300 62v24M132 146h156M160 146v-38h100v38"/></g>`,
+ dumbbell:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M120 95h180M138 73v44M160 64v62M260 64v62M282 73v44M128 146h164M158 146v-28h104v28"/></g>`,
+ band:`<g filter="url(#s)" stroke="url(#g)" stroke-width="10" fill="none" stroke-linecap="round"><path d="M112 60c76 0 45 82 98 82s21-82 98-82"/><circle cx="112" cy="60" r="13"/><circle cx="308" cy="60" r="13"/></g>`,
+ landmine:`<g filter="url(#s)" stroke="url(#g)" stroke-width="9" fill="none" stroke-linecap="round"><path d="M104 150l42-12L306 54M94 150h70M286 46l32 16M166 126l28 32M214 99l28 32"/><circle cx="306" cy="54" r="10" fill="#a3e635" stroke="none"/></g>`,
+ cardio:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="150" cy="126" r="34"/><circle cx="270" cy="126" r="34"/><path d="M150 126l46-58 30 58h-76l46-58h38M234 68h36M196 68l-18-24"/></g>`,
+ extension:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linecap="round"><path d="M94 150h232M142 150l42-75h72l42 75M184 75l-38 20M256 75l38 20M196 102h48"/></g>`,
+ mat:`<g filter="url(#s)" stroke="url(#g)" stroke-width="8" fill="none" stroke-linejoin="round"><path d="M92 136l52-82h184l-52 82zM144 54l46 82"/><circle cx="253" cy="89" r="18"/><path d="M235 112l-38 20M269 111l28 20"/></g>`
+ };
+ return `<div class="equipment-art">${common}${art[type]||art.dumbbell}</svg><div class="equipment-caption"><span>Equipment preview</span><strong>${label}</strong></div></div>`;
+}
+
 function showWorkout(day){
  const panel=document.getElementById('today'); const key=sessionKey(day.id); const log=state.logs[key]||{exercises:{},pain:0,mobility:9,energy:7,notes:'',completed:false};
  panel.innerHTML=`<div class="hero"><span class="badge">${day.tag}</span><h2>${day.name}</h2><p class="muted">Week ${state.week}: ${weekScheme[state.week].label} · ${day.time} · ${weekScheme[state.week].rir}</p></div><div class="warning"><strong>Post-surgery guardrail:</strong> only use hand exercises and loading your surgeon or hand therapist has cleared. Stop for sharp pain, increasing swelling, numbness, or loss of control.</div><div id="exerciseList"></div><div class="card"><h3>Session check-in</h3><div class="metrics"><label>Right-hand pain (0–10)<input id="pain" type="number" min="0" max="10" value="${log.pain}"></label><label>Right-hand mobility (0–10)<input id="mobilityScore" type="number" min="0" max="10" value="${log.mobility}"></label><label>Energy (0–10)<input id="energy" type="number" min="0" max="10" value="${log.energy}"></label><label>Notes<textarea id="notes">${log.notes||''}</textarea></label></div><div class="actions"><button class="button" id="finishWorkout">Save & complete workout</button><button class="button secondary" id="backProgram">Back to program</button></div></div>`;
  const list=panel.querySelector('#exerciseList');
  day.ex.forEach((ex,i)=>{
   const node=document.getElementById('exerciseTemplate').content.cloneNode(true); const exlog=log.exercises[i]||{};
-  node.querySelector('h3').textContent=getExerciseName(ex); node.querySelector('.exercise-tag').textContent=ex[1]; node.querySelector('.exercise-note').textContent=ex[2]; node.querySelector('.cue').textContent=ex[3];
+  const displayName=getExerciseName(ex); const guide=getGuide(displayName);
+  const visual=node.querySelector('.exercise-visual'); visual.innerHTML=equipmentSvg(displayName); visual.setAttribute('aria-label',`${displayName} equipment illustration`);
+  node.querySelector('h3').textContent=displayName; node.querySelector('.exercise-tag').textContent=ex[1]; node.querySelector('.exercise-note').textContent=ex[2]; node.querySelector('.cue').textContent=ex[3];
+  node.querySelector('.steps').innerHTML=guide.steps.map(step=>`<li>${step}</li>`).join('');
+  node.querySelector('.mistake').innerHTML=`<strong>Watch for:</strong> ${guide.mistake}`;
+  const demo=node.querySelector('.demo-link'); demo.href=guide.url; demo.setAttribute('aria-label',`Watch a ${displayName} exercise demo`);
   const complete=node.querySelector('.exercise-complete'); complete.checked=!!exlog.complete; complete.onchange=e=>updateExercise(key,i,'complete',e.target.checked);
   const sets=node.querySelector('.sets'); const count=day.id==='bonus'?2:weekScheme[state.week].sets;
   for(let s=0;s<count;s++){const r=(exlog.sets||[])[s]||{}; const row=document.createElement('div'); row.className='set-row'; row.innerHTML=`<span>Set ${s+1}</span><input inputmode="decimal" placeholder="Weight" value="${r.weight||''}" aria-label="Weight set ${s+1}"><input inputmode="numeric" placeholder="Reps (${day.id==='bonus'?'12–15':weekScheme[state.week].reps})" value="${r.reps||''}" aria-label="Reps set ${s+1}">`; const inputs=row.querySelectorAll('input'); inputs[0].oninput=e=>updateSet(key,i,s,'weight',e.target.value);inputs[1].oninput=e=>updateSet(key,i,s,'reps',e.target.value);sets.appendChild(row)}
